@@ -1,0 +1,21 @@
+<!--继承子模板layout.html  会拥有它所有的样式-->
+{{ extend "./_layout/tlayout.html" }} {{ block 'head' }}
+<!--写属于自己的样式-->
+<link rel="stylesheet" type="text/css" href="/public/css/teindex.css"> {{ /block }}
+
+<!--写中间不一样的地方   写了后原layout.html里默认部分就没有了  若不写就默认layout.html显示-->
+{{ block 'content' }}
+<div class=" col-sm-9 col-md-10 ansearch ">
+    {{ each datas}}
+    <ul class="title">
+        <li>
+            <a href="/teacher/announcement?id={{ $value.id }}">{{ $value.title }}</a>
+        </li>
+    </ul>
+    {{ /each }}
+</div>
+<div class="page">
+
+</div>
+
+{{ /block }}

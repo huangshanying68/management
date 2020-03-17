@@ -1,0 +1,20 @@
+.techangep {
+    margin-top: 5px;
+    background-color: #FFF;
+    height: 800px;
+}
+
+.techangep .chpasword {
+    max-width: 500px;
+    padding: 30px 15px 15px 15px;
+    margin: auto;
+}
+
+.techangep .chpasword label {
+    font-weight: 500;
+}
+
+.techangep .chpasword .pschange {
+    margin-left: 110px;
+    font-size: 16px;
+}

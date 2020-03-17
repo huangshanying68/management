@@ -1,0 +1,39 @@
+.header {
+    background-color: #FFF;
+    box-shadow: 0px 3px 10px #888;
+    padding-left: 10px;
+    overflow: hidden;
+    height: 40px;
+}
+
+.header span {
+    display: block;
+    width: 20%;
+    float: left;
+    text-align: center;
+    line-height: 40px;
+}
+
+.col-sm-3 .col-md-2 {
+    margin-top: 5px;
+    background-color: red;
+}
+
+.sidebar ul {
+    width: 195px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #FFF;
+    text-indent: 1em;
+    height: 800px;
+}
+
+
+/*.sidebar ul li {}*/
+
+
+/*.sidebar ul li a {}*/
+
+.sidebar ul li a:hover {
+    background-color: red;
+}

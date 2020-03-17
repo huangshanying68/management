@@ -1,0 +1,27 @@
+<!--继承子模板layout.html  会拥有它所有的样式-->
+{{ extend "./_layout/tlayout.html" }} {{ block 'head' }}
+<!--写属于自己的样式-->
+<link rel="stylesheet" type="text/css" href="/public/css/techanges.css"> {{ /block }}
+
+<!--写中间不一样的地方   写了后原layout.html里默认部分就没有了  若不写就默认layout.html显示-->
+{{ block 'content' }}
+<div class=" col-sm-9 col-md-10 techangep">
+    <form class="chpasword" method="post" id="changePasword">
+        <div class="form-group">
+            <label for="">请输入原密码:&nbsp;</label>
+            <input type="password" class="teoldpas" name="oldPassword" placeholder="请输入原密码">
+        </div>
+        <div class="form-group">
+            <label for="">请输入新密码:&nbsp;</label>
+            <input type="password" class="tenewpas" name="newPassword" placeholder="请输入新密码">
+        </div>
+        <div class="form-group">
+            <label for="">请确认新密码:&nbsp;</label>
+            <input type="password" class="teconfirm" name="conPassword" placeholder="请确认新密码">
+        </div>
+        <button type="button" class="btn btn-lg btn-info pschange" id="cPassword">确认修改</button>
+    </form>
+
+</div>
+
+{{ /block }}

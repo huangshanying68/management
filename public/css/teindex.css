@@ -1,0 +1,16 @@
+.ansearch {
+    margin-top: 5px;
+    background-color: #FFF;
+}
+
+.title {
+    list-style-type: none;
+    text-align: left;
+}
+
+
+/*.title li {}*/
+
+.title li a {
+    text-decoration: none;
+}
