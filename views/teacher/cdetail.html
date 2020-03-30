@@ -1,0 +1,34 @@
+<!--继承子模板layout.html  会拥有它所有的样式-->
+{{ extend "./_layout/tlayout.html" }} {{ block 'head' }}
+<!--写属于自己的样式-->
+<link rel="stylesheet" type="text/css" href="/public/css/cdetail.css"> {{ /block }}
+
+<!--写中间不一样的地方   写了后原layout.html里默认部分就没有了  若不写就默认layout.html显示-->
+{{ block 'content' }}
+<div class="col-sm-9 col-md-10 details">
+    <p>
+        <label>课程名：</label>
+        <span>{{ data.cname }}</span>
+    </p>
+    <p>
+        <label>课程所属专业：</label>
+        <span>{{ data.profession }}</span>
+    </p>
+    <p>
+        <label>课程性质：</label>
+        <span>{{ data.nature }}</span>
+    </p>
+    <p>
+        <label>开课学年：</label>
+        <span>{{ data.cydates }}</span>
+    </p>
+    <p>
+        <label>课程完成时间：</label>
+        <span>{{ data.cftimes }}</span>
+    </p>
+    <p>
+        <label>课程可选专业：</label>
+        <span>{{ data.csmajor }}</span>
+    </p>
+</div>
+{{ /block }}

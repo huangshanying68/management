@@ -9,19 +9,22 @@
     <form class="chpasword" method="post" id="changePasword">
         <div class="form-group">
             <label for="">请输入原密码:&nbsp;</label>
-            <input type="password" class="teoldpas" name="oldPassword" placeholder="请输入原密码">
+            <input type="password" class="teoldpas" name="oldPassword" placeholder="请输入原密码" required>
         </div>
         <div class="form-group">
             <label for="">请输入新密码:&nbsp;</label>
-            <input type="password" class="tenewpas" name="newPassword" placeholder="请输入新密码">
+            <input type="password" class="tenewpas" name="newPassword" placeholder="请输入新密码" required>
         </div>
         <div class="form-group">
             <label for="">请确认新密码:&nbsp;</label>
-            <input type="password" class="teconfirm" name="conPassword" placeholder="请确认新密码">
+            <input type="password" class="teconfirm" name="conPassword" placeholder="请确认新密码" required>
         </div>
-        <button type="button" class="btn btn-lg btn-info pschange" id="cPassword">确认修改</button>
+        <button type="button" class="btn  btn-info pschange" id="cPassword">确认修改</button>
     </form>
 
 </div>
 
+{{ /block }} {{ block 'script' }}
+<!--留坑写属于自己的样式-->
+<script src="/public/js/techanges.js"></script>
 {{ /block }}

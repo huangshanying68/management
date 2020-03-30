@@ -1,0 +1,24 @@
+.contents {
+    margin-top: 5px;
+    background-color: #FFF;
+    height: 800px;
+}
+
+.tsearch {
+    padding-left: 10px;
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.tsearch .form-group label {
+    font-weight: 600;
+}
+
+#search {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}

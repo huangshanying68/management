@@ -16,7 +16,8 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 //引用user.js  得到导出的routers
 var user = require('./routes/user');
-var teacher = require('./routes/teacher.js')
+var teacher = require('./routes/teacher.js');
+var admin = require('./routes/admin')
 var bodyParser = require("body-parser");
 var session = require('express-session');
 
@@ -65,7 +66,8 @@ app.set('views', path.join(__dirname, "./views/"))
 app.use('/user', user);以/user为父路由  假设他子路由有/one   则在user.js里有/one
 */
 app.use('/user', user);
-app.use('/teacher', teacher)
+app.use('/teacher', teacher);
+app.use('/admin', admin);
 
 //路由匹配不到 输出404
 app.use(function(req, res, next) {

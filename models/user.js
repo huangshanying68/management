@@ -11,6 +11,7 @@ function User(user) {
     this.mobile = user.mobile;
     this.duty = user.duty;
     this.mid = user.mid;
+    this.registration = user.registration
 };
 
 //获取用户所有信息
@@ -37,7 +38,29 @@ User.getUserName = function(username, callback) {
     });
 };
 
-//根据用户密码获取数据
+//总数
+User.countTeacher = function(callback) {
+    var selectSql = 'SELECT count(id) as count FROM users ';
+    db.query(selectSql, function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        var data = result[0];
+        callback(err, data);
+    });
+};
+
+//添加信息
+User.addteacher = function(user, callback) {
+    var selectSql = 'insert into users (id,username,password,name,sex,birthday,mobile,duty,mid)  values (?,?,?,?,?,?,?,?,?)';
+    db.query(selectSql, [user.id, user.username, user.password, user.name, user.sex, user.birthday, user.mobile, user.duty, user.mid], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+};
+/*//根据用户密码获取数据
 User.getUserByPassword = function(password, callback) {
     var selectSql = 'select * from users where password = ?';
     db.query(selectSql, [password], function(err, result) {
@@ -47,7 +70,7 @@ User.getUserByPassword = function(password, callback) {
         var data = result;
         callback(err, data);
     });
-};
+};*/
 
 //根据专业编号获取专业名称
 User.getUserNameMajor = function(id, callback) {
@@ -71,4 +94,15 @@ User.updatePassword = function(username, password, callback) {
         callback(err, result);
     });
 };
+
+//删除信息
+User.deteacher = function(id, callback) {
+    var selectSql = 'DELETE FROM users WHERE  id =?';
+    db.query(selectSql, [id], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+}
 module.exports = User;

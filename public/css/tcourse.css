@@ -1,0 +1,27 @@
+.contents {
+    margin-top: 5px;
+    background-color: #FFF;
+    height: 800px;
+}
+
+.csearch {
+    padding-left: 10px;
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.csearch .form-group {
+    width: 25%;
+    float: left;
+}
+
+.csearch .form-group label {
+    font-weight: 600;
+}
+
+.cdetail {
+    padding-top: 50px;
+}

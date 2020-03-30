@@ -29,25 +29,17 @@ routers.get("/", function(req, res) {
         let data = {
             anmessage: result
         };
-        User.getUserNameMajor(req.session.user.mid, function(err, result) {
-            if (err) {
-                res.send({ "error": 403, "message": "数据库异常！" })
-            }
-            /*console.log(req.session.user)
-            console.log(data.anmessage);
-            console.log(result);*/
-            res.render("./teacher/teindex.html", {
-                //随意命名参数:数据
-                usermessage: req.session.user, //登陆后登录信息保存在req.session.user
-                datas: data.anmessage, //只能为对象  数据获取不到   公告信息
-                major: result
-            });
 
+        res.render("./teacher/teindex.html", {
+            //随意命名参数:数据
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            datas: data.anmessage //只能为对象  数据获取不到   公告信息
         });
 
     });
 
 });
+
 
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/announcement", checkUserLogin);
@@ -66,47 +58,107 @@ routers.get("/announcement", function(req, res) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" })
         }
-        User.getUserNameMajor(req.session.user.mid, function(err, results) {
-            if (err) {
-                res.send({ "error": 403, "message": "数据库异常！" })
-            }
-            /*console.log(result);
-            console.log(req.session.user);*/
-            res.render("./teacher/andetail.html", {
-                //随意命名参数:数据
-                usermessage: req.session.user, //登陆后登录信息保存在req.session.user
-                major: results,
-                data: result
 
-            });
+        /*console.log(result);
+        console.log(req.session.user);*/
+        res.render("./teacher/andetail.html", {
+            //随意命名参数:数据
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: result
+
         });
     });
+});
 
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/course", checkUserLogin);
+routers.get("/course", function(req, res) {
+
+    Course.queryCourse(function(err, result) {
+        if (err) {
+            res.send({ "error": 403, "message": "数据库异常！" })
+        }
+        let datas = {
+            cmessage: result
+        };
+        console.log(datas)
+        res.render("./teacher/tcourse.html", {
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: datas.cmessage
+        })
+
+    })
+});
+//是否登录   每次判断获取用户信息req.session.user
+routers.post("/course", checkUserLogin);
+routers.post("/course", function(req, res) {
+    //models/course.js
+    var course = new Course({
+        cname: req.body.cnames ? req.body.cnames : '',
+        nature: req.body.natures ? req.body.natures : '',
+        profession: req.body.professions ? req.body.professions : ''
+    });
+
+    Course.querySearch(course, function(err, result) {
+        if (err) {
+            res.send({ "error": 403, "message": "数据库异常！" });
+            return;
+        }
+        //数组转换成对象
+        let datas = {
+            comessage: result
+        };
+        res.render("./teacher/tcourse.html", {
+            data: datas.comessage
+        })
+    })
+})
+
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/course/detail", checkUserLogin);
+
+//渲染数据 点击id显示每条题目详细信息
+routers.get("/course/detail", function(req, res) {
+    /*1.在客户端的列表中处理链接问题 需要id参数
+     *2.获取信息的id参数  从/teacher/course/detail?id={{ $value.id }}中获取   
+     *方法:req.query.id获取到字符串
+     *渲染页面:
+     *根据id把信息查出来
+     *使用模板引擎渲染页面
+     */
+    console.log(parseInt(req.query.id));
+    Course.GetMessage(parseInt(req.query.id), function(err, result) {
+        if (err) {
+            res.send({ "error": 403, "message": "数据库异常！" })
+        }
+
+        /*console.log(result);
+        console.log(req.session.user);*/
+        res.render("./teacher/cdetail.html", {
+            //随意命名参数:数据
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: result
+
+        });
+    });
 });
 
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/tecpasword", checkUserLogin);
-//是否登录   每次判断获取用户信息req.session.user
 routers.get("/tecpasword", function(req, res) {
-    User.getUserNameMajor(req.session.user.mid, function(err, results) {
-        if (err) {
-            res.send({ "error": 403, "message": "数据库异常！" })
-        }
-        res.render("./teacher/techanges.html", {
-            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
-            major: results
-        })
-    });
+    res.render("./teacher/techanges.html", {
+        usermessage: req.session.user //登陆后登录信息保存在req.session.user
+    })
 });
+
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/tecpasword", checkUserLogin);
 routers.post("/tecpasword", function(req, res) {
     //req.body获取表单post请求体数据 app.js body-parser
     var oldPassword = req.body.oldPassword;
     var newPassword = req.body.newPassword;
-    var conPassword = req.body.conPassword;
     var username = req.session.user.username;
-    User.getUserName(req.session.user.username, function(err, results) {
+    User.getUserName(username, function(err, results) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" })
         }

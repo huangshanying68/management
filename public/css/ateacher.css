@@ -1,0 +1,21 @@
+.cdetail .adds {
+    display: block;
+    text-decoration: none;
+    width: 80px;
+    background-color: #337ab7;
+    margin-bottom: 5px;
+    text-align: center;
+    line-height: 22px;
+    color: #fff;
+}
+
+.table {
+    border-top: 1px solid #c0c0c0;
+}
+
+.table a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #337ab7;
+    color: #fff;
+}
