@@ -2,7 +2,8 @@ var express = require("express");
 var User = require('../models/user.js');
 var Anment = require("../models/announcement.js")
 var Course = require("../models/course.js");
-//1.创建路由容器
+var Thcourse = require("../models/tchcourse.js")
+    //1.创建路由容器
 var routers = express.Router();
 
 //检查用户是否登录
@@ -53,7 +54,7 @@ routers.get("/announcement", function(req, res) {
      *根据id把信息查出来
      *使用模板引擎渲染页面
      */
-    console.log(parseInt(req.query.id));
+    // console.log(parseInt(req.query.id));
     Anment.GetMessage(parseInt(req.query.id), function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" })
@@ -72,46 +73,62 @@ routers.get("/announcement", function(req, res) {
 
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/course", checkUserLogin);
-routers.get("/course", function(req, res) {
 
-    Course.queryCourse(function(err, result) {
-        if (err) {
-            res.send({ "error": 403, "message": "数据库异常！" })
-        }
-        let datas = {
-            cmessage: result
-        };
-        console.log(datas)
-        res.render("./teacher/tcourse.html", {
-            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
-            data: datas.cmessage
-        })
-
-    })
-});
 //是否登录   每次判断获取用户信息req.session.user
-routers.post("/course", checkUserLogin);
-routers.post("/course", function(req, res) {
+// routers.post("/course", checkUserLogin);
+routers.get("/course", function(req, res) {
     //models/course.js
     var course = new Course({
-        cname: req.body.cnames ? req.body.cnames : '',
-        nature: req.body.natures ? req.body.natures : '',
-        profession: req.body.professions ? req.body.professions : ''
+        cname: req.query.cnames ? req.query.cnames : '',
+        nature: req.query.natures ? req.query.natures : '',
+        profession: req.query.professions ? req.query.professions : ''
     });
 
+    // console.log(course);
     Course.querySearch(course, function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" });
             return;
         }
         //数组转换成对象
-        let datas = {
-            comessage: result
-        };
+        // let datas = {
+        //     comessage: result
+        // };
+        //console.log(result);
         res.render("./teacher/tcourse.html", {
-            data: datas.comessage
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: result
+
         })
     })
+})
+
+//选课
+//是否登录   每次判断获取用户信息req.session.user
+routers.post("/course/chdel", checkUserLogin);
+routers.post("/course/chdel", function(req, res) {
+    var thcourse = new Thcourse({
+        username: req.session.user.username,
+        name: req.session.user.name,
+        mid: req.session.user.mid,
+        cname: req.body.cname,
+        csmajor: req.body.csmajor
+    });
+    Thcourse.addThcourse(thcourse, function(err, result) {
+        if (err) {
+            res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        Course.delCourse(parseInt(req.body.id), function(err, result) {
+            if (err) {
+                res.send({ "error": 403, "message": "数据库异常！" });
+            }
+            // res.redirect("/teacher/course");
+            res.send({ "success": true });
+
+        })
+
+    })
+
 })
 
 //是否登录   每次判断获取用户信息req.session.user
@@ -126,7 +143,7 @@ routers.get("/course/detail", function(req, res) {
      *根据id把信息查出来
      *使用模板引擎渲染页面
      */
-    console.log(parseInt(req.query.id));
+    // console.log(parseInt(req.query.id));
     Course.GetMessage(parseInt(req.query.id), function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" })

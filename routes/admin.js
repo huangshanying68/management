@@ -40,7 +40,7 @@ routers.post("/", function(req, res) {
         });
         console.log(course)
         Course.addCourse(course, function(err, data) {
-            console.log(data);
+            // console.log(data);
             if (err) {
                 return res.send({ "error": 403, "message": "数据库异常！" });
             }
@@ -211,7 +211,7 @@ routers.post("/announcement/add", function(req, res) {
             dates: req.body.dates ? req.body.dates : '',
             content: req.body.content ? req.body.content : ''
         });
-        console.log(anment)
+        //  console.log(anment)
         Anment.addMessage(anment, function(err, dats) {
             console.log(dats)
             if (err) {

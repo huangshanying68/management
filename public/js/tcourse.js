@@ -9,6 +9,18 @@ $(function() {
         var nature = $('[name="cnature"]').val();
         //获取选中项的文本值
         var profession = $("#cprofession").find("option:selected").text();
+        if (cname == '') {
+            cname = '';
+        }
+        if (nature == '') {
+            nature = ''
+        }
+        if (profession == '') {
+            profession = ''
+        }
+        // console.log(cname)
+        // console.log(nature)
+        // console.log(profession)
         $.ajax({
             url: "/teacher/course",
             type: "get",
@@ -19,10 +31,36 @@ $(function() {
                 natures: nature,
                 professions: profession
             },
-            success: function(resonse) {
+            success: function(response) {
                 console.log(response);
             }
 
         })
-    })
+    });
 })
+
+function chdel(id, cname, csmajor) {
+
+    console.log(id)
+    console.log(cname);
+    console.log(csmajor);
+    console.log(typeof cname);
+    $.ajax({
+        url: "/teacher/course/chdel",
+        type: "post",
+        dataType: "json",
+        data: {
+            id: id,
+            cname: cname,
+            csmajor: csmajor
+        },
+        success: function(response) {
+            if (response.success) {
+                window.alert("选课成功")
+                location.reload();
+            } else {
+                window.alert("选课失败");
+            }
+        }
+    })
+}

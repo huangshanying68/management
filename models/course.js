@@ -37,18 +37,38 @@ Course.queryCourse = function(callback) {
 Course.querySearch = function(courses, callback) {
     var selectSql = "select * from course WHERE 1=1"; //WHERE 1=1判断用户填入的条件参数不为null以及除去空格不为空，满足该条件后，使用sql语句拼凑。
     //创建一个ArrayList，用来装载参数值
-    var param = new Array();
-    if (courses.cname) {
+    // var param = new Array();
+    let param = [];
+    if (courses.cname != '') {
+        courses.cname = '%" + courses.cname + "%';
         selectSql = selectSql + " and cname like ? ";
-        param[0] = '%' + courses.cname + '%';
+        // param[0] = '%' + courses.cname + '%';
+        param.push(courses.cname);
     }
-    if (courses.nature) {
+    if (courses.nature != '') {
+        courses.nature = '%" + courses.nature + "%';
         selectSql = selectSql + "and nature like ?";
-        param[param.length] = '%' + courses.nature + '%';
+        // param[param.length] = '%' + courses.nature + '%';
+        param.push(courses.nature);
     }
-    if (courses.profession) {
-        selectSql = selectSql + "and profession  like ?";
-        param[param.length] = '%' + courses.profession + '%';
+    if (courses.profession != '') {
+        if (courses.profession == "计算机科学与技术") {
+            courses.profession = '%计算机科学与技术%';
+            selectSql = selectSql + "and profession like ?";
+            param.push(courses.profession);
+        } else if (courses.profession == "软件工程") {
+            courses.profession = '%软件工程%';
+            selectSql = selectSql + "and profession like ?";
+            param.push(courses.profession);
+        } else if (courses.profession == "信息安全") {
+            courses.profession = '%信息安全%';
+            selectSql = selectSql + "and profession like ?";
+            param.push(courses.profession);
+        } else if (courses.profession == "智能科学与技术") {
+            courses.profession = '%智能科学与技术%';
+            selectSql = selectSql + "and profession like ?";
+            param.push(courses.profession);
+        }
     }
     db.query(selectSql, param, function(err, result) {
         if (err) {
@@ -72,7 +92,7 @@ Course.GetMessage = function(id, callback) {
     });
 };
 
-//添加信息
+//获取总数
 Course.countCourse = function(callback) {
     var selectSql = 'SELECT count(id) as count FROM course ';
     db.query(selectSql, function(err, result) {
@@ -95,50 +115,15 @@ Course.addCourse = function(course, callback) {
     });
 };
 
-
-/*Product.queryProductDetailList= function (product, page, callback) {
-  var selectSql = "SELECT * FROM product WHERE 1=1 ";
-  var param = new Array();
-  if (product.proName) {
-    selectSql = selectSql + " AND  proName LIKE ? ";
-    param[0] = '%' + product.proName + '%';
-  }
-  if (product.brandId) {
-    selectSql = selectSql + " AND  brandId =? ";
-    param[param.length] = product.brandId;
-  }
-  if (product.price) {
-    if (product.price == 1) selectSql = selectSql + " ORDER BY price ";
-    if (product.price == 2) selectSql = selectSql + " ORDER BY price DESC ";
-  }
-  else if (product.num) {
-    if (product.num == 1) selectSql = selectSql + " ORDER BY num ";
-    if (product.num == 2) selectSql = selectSql + " ORDER BY num DESC ";
-  }else{
-      selectSql = selectSql + " ORDER BY id DESC ";
-  }
-  selectSql = selectSql + " LIMIT ?,?";
-  param[param.length] = (page.page - 1) * page.size;
-  param[param.length] = page.size;
-  console.log(selectSql);
-  console.log(param);
-  db.query(selectSql, param, function (err, result) {
-    if (err) {
-      return callback(err);
+//通过id删除数据
+Course.delCourse = function(id, callback) {
+        var selectSql = 'DELETE FROM course WHERE  id =?';
+        db.query(selectSql, [id], function(err, result) {
+            if (err) {
+                return callback(err);
+            }
+            callback(err, result);
+        });
     }
-    var data = result;
-    callback(err, data);
-  });
-};
-Product.countProductDetailList = function (callback) {
-    var selectSql = 'SELECT count(id) as count FROM product WHERE 1=1';
-    db.query(selectSql, function (err, result) {
-        if (err) {
-            return callback(err);
-        }
-        var data = result[0];
-        callback(err, data);
-    });
-};*/
-//3.把路由导出
+    //3.把路由导出
 module.exports = Course;

@@ -23,11 +23,10 @@
             <label for="cprofession">选择专业:</label>
             <select id="cprofession">
                 <option></option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option>计算机科学与技术</option>
+                <option>软件工程</option>
+                <option>信息安全</option>
+                <option>智能科学与技术</option>
             </select>
         </div>
         <div class="form-group ">
@@ -55,8 +54,8 @@
                     <td>{{ $value.profession }}</td>
                     <td>{{ $value.csmajor }}</td>
                     <td>
-                        <a href="/teacher/course/detail?id={{ $value.id }}">课程详情</a>
-
+                        <a href="/teacher/course/detail?id={{ $value.id }}" class="detail">课程详情</a>
+                        <a href="javascript:;" class="choose" onclick="chdel({{ $value.id }},'{{ $value.cname }}' ,'{{ $value.csmajor }}' )"> 选课</a>
                     </td>
                 </tr>
                 {{ /each}}

@@ -18,7 +18,7 @@ $("#login_form").on("submit", function(datas) {
         $('[name="password"]').val('');
     }
     //serialize()序列化表单
-    var formData = $(this).serialize(); //this:#login_form   获取表单数据 表单必须有ID
+    var formData = $(this).serialize(); //this:#login_form   获取表单数据 表单form必须有ID
     $.ajax({
         url: "/user/login",
         type: "post",
@@ -30,15 +30,19 @@ $("#login_form").on("submit", function(datas) {
                 //sessionStorage.anmessage=response.username;
                 //得到后端roles数据
                 var role = response.roles;
+                // console.log(response)
                 if (role == "教师") {
                     window.location.href = '/teacher/';
                 } else if (role == "教秘") {
                     window.location.href = '/admin/';
+                } else if (role == "教研") {
+                    window.location.href = '/research/';
                 } else {
-                    window.location.href = '/arg/login';
+                    window.location.href = '/user/login';
+
                 }
             } else {
-                alert(response.message);
+                // alert(response.message);
                 window.location.href = '/user/login';
             }
         }
