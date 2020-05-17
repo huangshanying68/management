@@ -1,6 +1,6 @@
 var express = require("express");
 var User = require('../models/user.js');
-var Course = require("../models/course.js");
+var Scourse = require("../models/scourse.js")
 var Message = require('../models/temessage.js');
 var Anment = require('../models/announcement.js')
     //1.创建路由容器
@@ -21,15 +21,16 @@ routers.get("/", function(req, res) {
         usermessage: req.session.user //登陆后登录信息保存在req.session.user
     })
 });
+//教学计划数据提交
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/", checkUserLogin);
 routers.post("/", function(req, res) {
-    Course.countCourse(function(err, data) {
+    Scourse.countCourse(function(err, data) {
         if (err) {
             return res.send({ "error": 403, "message": "数据库异常！" });
         }
-        console.log(data.count)
-        var course = new Course({
+        //console.log(data.count)
+        var scourse = new Scourse({
             id: Number(data.count) + 1,
             cname: req.body.cname ? req.body.cname : '',
             nature: req.body.nature ? req.body.nature : '',
@@ -38,8 +39,8 @@ routers.post("/", function(req, res) {
             cftimes: req.body.cftimes ? req.body.cftimes : '',
             csmajor: req.body.csmajor ? req.body.csmajor : '',
         });
-        console.log(course)
-        Course.addCourse(course, function(err, data) {
+        // console.log(scourse)
+        Scourse.addCourse(scourse, function(err, data) {
             // console.log(data);
             if (err) {
                 return res.send({ "error": 403, "message": "数据库异常！" });
@@ -127,6 +128,37 @@ routers.get("/maintenance", function(req, res) {
 
     });
 });
+
+
+//搜索还是不成功
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/teacher/searchs", checkUserLogin);
+routers.get("/teacher/searchs", function(req, res) {
+    // console.log(req.query.username);
+    User.queryUserName(req.query.username, function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        // res.render("./admin/ateacher.html", {
+        //     data: result
+        // })
+        res.send({ "data": result })
+
+    });
+})
+
+//用户修改信息
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/teupdate", checkUserLogin);
+routers.get("/teupdate", function(req, res) {
+    User.queryId(parseInt(req.query.id), function(err, result) {
+        res.render("./admin/teupdate.html", {
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            usermessages: result
+        })
+    })
+});
+
 
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/teacher/add", checkUserLogin);

@@ -16,7 +16,7 @@
             <label for="cname">教师账号:</label>
             <input type="text" id="username" name="username">
         </div>
-        <button type="button" class="btn btn-primary " id="search">查询</button>
+        <a href="javascript:;" class="searchs" onclick="searchs()">查询</a>
     </form>
     <div class="cdetail">
         <a href="/admin/teacher/add" class="adds">添加信息</a>
@@ -32,7 +32,7 @@
                     <th>操作</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tabledata">
                 {{ each data }}
                 <tr>
                     <td>{{ $value.username }}</td>

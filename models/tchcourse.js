@@ -19,4 +19,14 @@ Thcourse.addThcourse = function(thcourse, callback) {
     });
 }
 
+//根据可选专业的模糊进行显示数据
+Thcourse.queryThcourse = function(username, callback) {
+    var selectSql = "select * from course WHERE csmajor like '%" + username + "%'";
+    db.query(selectSql, [username], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    })
+}
 module.exports = Thcourse;

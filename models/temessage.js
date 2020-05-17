@@ -20,7 +20,7 @@ Message.queryCourse = function(callback) {
 };
 
 
-//通过姓名获取信息
+//通过账号获取信息
 Message.GetMessage = function(username, callback) {
     var selectSql = 'select * from temessage where username = ?';
     db.query(selectSql, [username], function(err, result) {

@@ -1,3 +1,15 @@
+.searchs {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    padding: 5px 10px;
+    color: #fff;
+    background-color: blue;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
 .cdetail .adds {
     display: block;
     text-decoration: none;

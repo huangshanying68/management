@@ -72,10 +72,10 @@ User.getUserByPassword = function(password, callback) {
     });
 };*/
 
-//根据专业编号获取专业名称
-User.getUserNameMajor = function(id, callback) {
-    var selectSql = 'select mname from major where id = ?';
-    db.query(selectSql, [id], function(err, result) {
+//根据账号获取信息
+User.queryUserName = function(username, callback) {
+    var selectSql = 'select * from users where username = ?';
+    db.query(selectSql, [username], function(err, result) {
         if (err) {
             return callback(err);
         }
@@ -84,6 +84,17 @@ User.getUserNameMajor = function(id, callback) {
     });
 };
 
+//根据账号获取信息
+User.queryId = function(id, callback) {
+    var selectSql = 'select * from users where id = ?';
+    db.query(selectSql, [id], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        var data = result[0];
+        callback(err, data);
+    });
+};
 //修改密码
 User.updatePassword = function(username, password, callback) {
     var selectSql = 'UPDATE users SET password =? WHERE username=?';

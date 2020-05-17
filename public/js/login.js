@@ -42,7 +42,7 @@ $("#login_form").on("submit", function(datas) {
 
                 }
             } else {
-                // alert(response.message);
+                alert(response.message);
                 window.location.href = '/user/login';
             }
         }
