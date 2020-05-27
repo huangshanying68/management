@@ -11,7 +11,6 @@ function User(user) {
     this.mobile = user.mobile;
     this.duty = user.duty;
     this.mid = user.mid;
-    this.registration = user.registration
 };
 
 //获取用户所有信息
@@ -84,7 +83,7 @@ User.queryUserName = function(username, callback) {
     });
 };
 
-//根据账号获取信息
+//根据id获取信息
 User.queryId = function(id, callback) {
     var selectSql = 'select * from users where id = ?';
     db.query(selectSql, [id], function(err, result) {
@@ -110,6 +109,17 @@ User.updatePassword = function(username, password, callback) {
 User.deteacher = function(id, callback) {
     var selectSql = 'DELETE FROM users WHERE  id =?';
     db.query(selectSql, [id], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+}
+
+//修改信息
+User.updateTeacher = function(username, name, password, mobile, callback) {
+    let selectSql = 'UPDATE users SET password =?,name =?,mobile =? WHERE username=?';
+    db.query(selectSql, [password, name, mobile, username], function(err, result) {
         if (err) {
             return callback(err);
         }

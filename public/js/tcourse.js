@@ -1,63 +1,43 @@
-$(function() {
-    /*
-     *给查询按钮添加点击事件
-     *获取用户输入信息
-     *调用接口
-     */
-    $("#search").on("click", function() {
-        var cname = $('[name="cname"]').val();
-        var nature = $('[name="cnature"]').val();
-        //获取选中项的文本值
-        var profession = $("#cprofession").find("option:selected").text();
-        if (cname == '') {
-            cname = '';
-        }
-        if (nature == '') {
-            nature = ''
-        }
-        if (profession == '') {
-            profession = ''
-        }
-        // console.log(cname)
-        // console.log(nature)
-        // console.log(profession)
-        $.ajax({
-            url: "/teacher/course",
-            type: "get",
-            dataType: "json",
-            data: {
-                //传至后端数据命名：值     后端数据:req.body.
-                cnames: cname,
-                natures: nature,
-                professions: profession
-            },
-            success: function(response) {
-                console.log(response);
+function searchs() {
+    let cname = $('[name="cname"]').val();
+    let cnature = $('[name="cnature"]').val();
+    //获取选中的文本框的值
+    let csmajor = $("#cprofession option:selected").text();
+    // console.log(csmajor)
+    // 声明变量 
+    let table, tr, td1, td2, td4, i;
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    // 循环表格每一行，查找匹配项 
+    for (i = 0; i < tr.length; i++) {
+        td1 = tr[i].getElementsByTagName("td")[1];
+        td2 = tr[i].getElementsByTagName("td")[2];
+        td4 = tr[i].getElementsByTagName("td")[4];
+        if (td1 || td2 || td4) {
+            if (td1.innerHTML.indexOf(cname) > -1 && td2.innerHTML.indexOf(cnature) > -1 && td4.innerHTML.indexOf(csmajor) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
             }
+        }
+    }
+}
 
-        })
-    });
-})
-
-function chdel(id, cname, csmajor) {
-
-    console.log(id)
-    console.log(cname);
-    console.log(csmajor);
-    console.log(typeof cname);
+function chdel(cno, cname, csmajor, profession) {
     $.ajax({
         url: "/teacher/course/chdel",
         type: "post",
         dataType: "json",
         data: {
-            id: id,
+            cno: cno,
             cname: cname,
-            csmajor: csmajor
+            csmajor: csmajor,
+            profession: profession
         },
         success: function(response) {
             if (response.success) {
                 window.alert("选课成功")
-                location.reload();
+                window.location.href = "/teacher/course"
             } else {
                 window.alert("选课失败");
             }

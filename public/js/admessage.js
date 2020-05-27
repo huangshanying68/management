@@ -1,22 +1,35 @@
-function searchs() {
-    var username = $.trim($('[name="username"]').val());
-    console.log(username)
-    $.ajax({
-        url: "/admin/teacher/searchs",
-        type: "get",
-        data: {
-            username: username
-        },
-        dataType: "json",
-        success: function(response) {
-            //搜索显示结果的方法
-            // let data = response.data;
-
-            // var tr;
-            // tr = '<td>' + data.username + '</td>' + '<td>' + data.name + '</td>' + '<td>' + data.password + '</td>' + '<td>' + data.sex + '</td>'
-            // $("#tabledata").append('<tr>' + tr + '</tr>')
-
-
+function myFunction() {
+    let username = $('[name="username"]').val();
+    // 声明变量 
+    let table, tr, td, i;
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    // 循环表格每一行，查找匹配项 
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            if (username == '') {
+                tr[i].style.display = "";
+            }
         }
-    })
+    }
+}
+
+function searchs() {
+    let username = $('[name="username"]').val();
+    // 声明变量 
+    let table, tr, td, i;
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    // 循环表格每一行，查找匹配项 
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            if (td.innerHTML == username || username == '') {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
 }

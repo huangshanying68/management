@@ -3,6 +3,7 @@ var User = require('../models/user.js');
 var Anment = require("../models/announcement.js");
 var Course = require("../models/course.js")
 var Scourse = require('../models/scourse.js')
+var Thcourse = require('../models/tchcourse.js')
     //1.创建路由容器
 var routers = express.Router();
 
@@ -96,36 +97,27 @@ routers.get("/teaching", function(req, res) {
 routers.post("/teaching/recfirm", checkUserLogin);
 
 routers.post("/teaching/recfirm", function(req, res) {
-    Course.countCourse(function(err, data1) {
+    //console.log(data.count)
+    var course = new Course({
+        cno: req.body.cno,
+        cname: req.body.cname,
+        nature: req.body.nature,
+        profession: req.body.profession,
+        cydates: req.body.cydates,
+        cftimes: req.body.cftimes,
+        csmajor: req.body.csmajor
+    });
+    Course.addCourse(course, function(err, data2) {
         if (err) {
             return res.send({ "error": 403, "message": "数据库异常！" });
         }
-        //console.log(data.count)
-        var course = new Course({
-            id: Number(data1.count) + 1,
-            cname: req.body.cname,
-            nature: req.body.nature,
-            profession: req.body.profession,
-            cydates: req.body.cydates,
-            cftimes: req.body.cftimes,
-            csmajor: req.body.csmajor
-        });
-        // console.log(scourse)
-        Course.addCourse(course, function(err, data2) {
-            // console.log(data);
+        Scourse.delScourse(req.body.cno, function(err, result) {
             if (err) {
-                return res.send({ "error": 403, "message": "数据库异常！" });
+                res.send({ "error": 403, "message": "数据库异常！" });
             }
-            Scourse.delScourse(parseInt(req.body.id), function(err, result) {
-                if (err) {
-                    res.send({ "error": 403, "message": "数据库异常！" });
-                }
-                // res.redirect("/teacher/course");
-                res.send({ "success": true });
+            res.send({ "success": true });
 
-            })
         })
-
     })
 
 })
@@ -134,7 +126,7 @@ routers.post("/teaching/recfirm", function(req, res) {
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/teaching/recdel", checkUserLogin);
 routers.post("/teaching/recdel", function(req, res) {
-    Scourse.delScourse(parseInt(req.body.id), function(err, result) {
+    Scourse.delScourse(req.body.cno, function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" });
         }

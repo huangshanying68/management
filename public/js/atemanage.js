@@ -1,8 +1,8 @@
 $(function() {
     $("#messubmit").on("click", function() {
-        console.log(56555655);
         var username = $('[name="username"]').val();
         var name = $('[name="name"]').val();
+        var cno = $('[name="cno"]').val();
         var cname = $('[name="cname"]').val();
         var registration = $('input[name="tesub"]:checked').val(); //获取选中的单选的值
 
@@ -12,6 +12,7 @@ $(function() {
             data: {
                 username: username,
                 name: name,
+                cno: cno,
                 cname: cname,
                 registration: registration
             },

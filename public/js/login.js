@@ -10,7 +10,7 @@ $("#login_form").on("submit", function(datas) {
     var usernames = $.trim($('[name="username"]').val());
     var passwords = $.trim($('[name="password"]').val());
     if (!usernames) {
-        window.alert("用户名不可为空");
+        window.alert("账号不可为空");
     }
     if (!passwords) {
         window.alert("密码不可为空");

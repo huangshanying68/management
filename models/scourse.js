@@ -1,7 +1,7 @@
 var db = require('./db.js');
 
 function Scourse(scourse) {
-    this.id = scourse.id;
+    this.cno = scourse.cno;
     this.cname = scourse.cname;
     this.nature = scourse.nature;
     this.profession = scourse.profession;
@@ -35,7 +35,7 @@ Scourse.GetMessage = function(profession, callback) {
 
 //获取总数
 Scourse.countCourse = function(callback) {
-    var selectSql = 'SELECT count(id) as count FROM scourse ';
+    var selectSql = 'SELECT count(cno) as count FROM scourse ';
     db.query(selectSql, function(err, result) {
         if (err) {
             return callback(err);
@@ -47,8 +47,8 @@ Scourse.countCourse = function(callback) {
 
 //添加信息
 Scourse.addCourse = function(scourse, callback) {
-    var selectSql = 'insert into scourse (id,cname,nature,profession,cydates,cftimes,csmajor)  values (?,?,?,?,?,?,?)';
-    db.query(selectSql, [scourse.id, scourse.cname, scourse.nature, scourse.profession, scourse.cydates, scourse.cftimes, scourse.csmajor], function(err, result) {
+    var selectSql = 'insert into scourse (cno,cname,nature,profession,cydates,cftimes,csmajor)  values (?,?,?,?,?,?,?)';
+    db.query(selectSql, [scourse.cno, scourse.cname, scourse.nature, scourse.profession, scourse.cydates, scourse.cftimes, scourse.csmajor], function(err, result) {
         if (err) {
             return callback(err);
         }
@@ -57,9 +57,9 @@ Scourse.addCourse = function(scourse, callback) {
 };
 
 //通过id删除数据
-Scourse.delScourse = function(id, callback) {
-        var selectSql = 'DELETE FROM scourse WHERE  id =?';
-        db.query(selectSql, [id], function(err, result) {
+Scourse.delScourse = function(cno, callback) {
+        var selectSql = 'DELETE FROM scourse WHERE  cno =?';
+        db.query(selectSql, [cno], function(err, result) {
             if (err) {
                 return callback(err);
             }

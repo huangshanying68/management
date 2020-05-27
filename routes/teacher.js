@@ -71,66 +71,52 @@ routers.get("/announcement", function(req, res) {
     });
 });
 
+
+//选课列表
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/course", checkUserLogin);
-
 //是否登录   每次判断获取用户信息req.session.user
-// routers.post("/course", checkUserLogin);
 routers.get("/course", function(req, res) {
-    //models/course.js
-    var course = new Course({
-        cname: req.query.cnames ? req.query.cnames : '',
-        nature: req.query.natures ? req.query.natures : '',
-        profession: req.query.professions ? req.query.professions : ''
-    });
-
-    // console.log(course);
-    Course.querySearch(course, function(err, result) {
+    Course.queryCourse(req.session.user.username, function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" });
-            return;
         }
         //数组转换成对象
-        // let datas = {
-        //     comessage: result
-        // };
-        //console.log(result);
+        let datas = {
+            message: result
+        };
         res.render("./teacher/tcourse.html", {
             usermessage: req.session.user, //登陆后登录信息保存在req.session.user
-            data: result
-
+            data: datas.message
         })
     })
 })
 
 //选课
 //是否登录   每次判断获取用户信息req.session.user
-routers.post("/course/chdel", checkUserLogin);
+routers.post("course/chdel", checkUserLogin);
 routers.post("/course/chdel", function(req, res) {
     var thcourse = new Thcourse({
         username: req.session.user.username,
         name: req.session.user.name,
         mid: req.session.user.mid,
+        cno: req.body.cno,
         cname: req.body.cname,
-        csmajor: req.body.csmajor
+        csmajor: req.body.csmajor,
+        profession: req.body.profession
     });
+
     Thcourse.addThcourse(thcourse, function(err, result) {
         if (err) {
-            res.send({ "error": 403, "message": "数据库异常！" });
+            return res.send({ "error": 403, "message": "数据库异常！" });
         }
-        Course.delCourse(parseInt(req.body.id), function(err, result) {
-            if (err) {
-                res.send({ "error": 403, "message": "数据库异常！" });
-            }
-            // res.redirect("/teacher/course");
-            res.send({ "success": true });
-
-        })
+        res.send({ "success": true });
 
     })
 
 })
 
+//选课课程详情
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/course/detail", checkUserLogin);
 
@@ -143,14 +129,10 @@ routers.get("/course/detail", function(req, res) {
      *根据id把信息查出来
      *使用模板引擎渲染页面
      */
-    // console.log(parseInt(req.query.id));
-    Course.GetMessage(parseInt(req.query.id), function(err, result) {
+    Course.GetMessage(req.query.cno, function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" })
         }
-
-        /*console.log(result);
-        console.log(req.session.user);*/
         res.render("./teacher/cdetail.html", {
             //随意命名参数:数据
             usermessage: req.session.user, //登陆后登录信息保存在req.session.user

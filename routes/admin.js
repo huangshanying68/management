@@ -25,37 +25,34 @@ routers.get("/", function(req, res) {
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/", checkUserLogin);
 routers.post("/", function(req, res) {
-    Scourse.countCourse(function(err, data) {
+    //console.log(data.count)
+    var scourse = new Scourse({
+        cno: req.body.cno,
+        cname: req.body.cname,
+        nature: req.body.nature,
+        profession: req.body.profession,
+        cydates: req.body.cydates,
+        cftimes: req.body.cftimes,
+        csmajor: req.body.csmajor,
+    });
+    // console.log(scourse)
+    Scourse.addCourse(scourse, function(err, data) {
+        // console.log(data);
         if (err) {
             return res.send({ "error": 403, "message": "数据库异常！" });
         }
-        //console.log(data.count)
-        var scourse = new Scourse({
-            id: Number(data.count) + 1,
-            cname: req.body.cname ? req.body.cname : '',
-            nature: req.body.nature ? req.body.nature : '',
-            profession: req.body.profession ? req.body.profession : '',
-            cydates: req.body.cydates ? req.body.cydates : '',
-            cftimes: req.body.cftimes ? req.body.cftimes : '',
-            csmajor: req.body.csmajor ? req.body.csmajor : '',
-        });
-        // console.log(scourse)
-        Scourse.addCourse(scourse, function(err, data) {
-            // console.log(data);
-            if (err) {
-                return res.send({ "error": 403, "message": "数据库异常！" });
-            }
-            res.send({ "success": true });
-
-        })
+        res.send({ "success": true });
 
     })
-});
 
+})
+
+//档案管理
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/tesearch", checkUserLogin);
 routers.get("/tesearch", function(req, res) {
-    Message.detemessage(parseInt(req.query.id), function(err, results) {
+
+    Message.detemessage(req.query.cno, function(err, results) {
         Message.queryCourse(function(err, results) {
             if (err) {
                 return res.send({ "error": 403, "message": "数据库异常！" });
@@ -63,13 +60,12 @@ routers.get("/tesearch", function(req, res) {
             let datas = {
                 tmessage: results
             };
-            console.log(datas)
             res.render("./admin/admessage.html", {
                 usermessage: req.session.user, //登陆后登录信息保存在req.session.user
                 data: datas.tmessage
             })
-        })
 
+        });
     });
 });
 
@@ -83,31 +79,24 @@ routers.get("/tesub", function(req, res) {
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/tesub", checkUserLogin);
 routers.post("/tesub", function(req, res) {
-    Message.countUsername(function(err, result) {
+    var message = new Message({
+        username: req.body.username ? req.body.username : '',
+        name: req.body.name ? req.body.name : '',
+        cno: req.body.cno,
+        cname: req.body.cname ? req.body.cname : '',
+        registration: req.body.registration ? req.body.registration : ''
+    });
+
+    Message.addMessage(message, function(err, data) {
+        // console.log(data);
         if (err) {
-            res.send({ "error": 403, "message": "数据库异常！" });
+            return res.send({ "error": 403, "message": "数据库异常！" });
         }
-        //console.log(result)
-        var message = new Message({
-            id: Number(result.count) + 1,
-            username: req.body.username ? req.body.username : '',
-            name: req.body.name ? req.body.name : '',
-            cname: req.body.cname ? req.body.cname : '',
-            registration: req.body.registration ? req.body.registration : ''
-        });
-
-        Message.addMessage(message, function(err, data) {
-            console.log(data);
-            if (err) {
-                return res.send({ "error": 403, "message": "数据库异常！" });
-            }
-            res.send({ "success": true });
+        res.send({ "success": true });
 
 
-        })
     })
-
-});
+})
 
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/maintenance", checkUserLogin);
@@ -129,35 +118,32 @@ routers.get("/maintenance", function(req, res) {
     });
 });
 
-
-//搜索还是不成功
-//是否登录   每次判断获取用户信息req.session.user
-routers.get("/teacher/searchs", checkUserLogin);
-routers.get("/teacher/searchs", function(req, res) {
-    // console.log(req.query.username);
-    User.queryUserName(req.query.username, function(err, result) {
-        if (err) {
-            return res.send({ "error": 403, "message": "数据库异常！" });
-        }
-        // res.render("./admin/ateacher.html", {
-        //     data: result
-        // })
-        res.send({ "data": result })
-
-    });
-})
-
-//用户修改信息
+//信息维护  修改信息
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/teupdate", checkUserLogin);
 routers.get("/teupdate", function(req, res) {
     User.queryId(parseInt(req.query.id), function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
         res.render("./admin/teupdate.html", {
             usermessage: req.session.user, //登陆后登录信息保存在req.session.user
             usermessages: result
         })
     })
 });
+
+//是否登录   每次判断获取用户信息req.session.user
+routers.post("/teupdate", checkUserLogin);
+routers.post("/teupdate", function(req, res) {
+    User.updateTeacher(req.body.username, req.body.name, req.body.password, req.body.mobile, function(err, data) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        res.send({ "success": true });
+    });
+});
+
 
 
 //是否登录   每次判断获取用户信息req.session.user
@@ -186,9 +172,9 @@ routers.post("/teacher/add", function(req, res) {
             duty: req.body.duty ? req.body.duty : '教师',
             mid: req.body.mid ? req.body.mid : '',
         });
-        console.log(user)
+        // console.log(user)
         User.addteacher(user, function(err, dats) {
-            console.log(dats)
+            // console.log(dats)
             if (err) {
                 return res.send({ "error": 403, "message": "数据库异常！" });
             }
@@ -236,7 +222,7 @@ routers.post("/announcement/add", function(req, res) {
         if (err) {
             return res.send({ "error": 403, "message": "数据库异常！" });
         }
-        console.log(data.count)
+        // console.log(data.count)
         var anment = new Anment({
             id: Number(data.count) + 1,
             title: req.body.title ? req.body.title : '',
@@ -245,7 +231,7 @@ routers.post("/announcement/add", function(req, res) {
         });
         //  console.log(anment)
         Anment.addMessage(anment, function(err, dats) {
-            console.log(dats)
+            // console.log(dats)
             if (err) {
                 return res.send({ "error": 403, "message": "数据库异常！" });
             }

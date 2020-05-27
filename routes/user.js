@@ -21,7 +21,7 @@ routers.post("/login", async(req, res, next) => {
         User.getUserName(req.body.username, function(err, result) {
             if (!err) {
                 if (result.length == 0) {
-                    return res.send({ "error": 403, "message": "用户名不存在! " });
+                    return res.send({ "error": 403, "message": "账号不存在! " });
                 }
                 if (password != result[0].password) {
                     return res.send({ "error": 403, "message": "密码错误！" });

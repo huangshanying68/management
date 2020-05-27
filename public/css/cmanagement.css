@@ -1,0 +1,47 @@
+.contents {
+    margin-top: 5px;
+    background-color: #FFF;
+    height: 800px;
+}
+
+.csearch {
+    padding-left: 10px;
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    overflow: hidden;
+}
+
+.csearch .form-group {
+    width: 25%;
+    float: left;
+}
+
+.csearch .form-group label {
+    font-weight: 600;
+}
+
+.cdetail {
+    padding-top: 50px;
+}
+
+
+/* .cdetail td {
+    width: 50px;
+} */
+
+.cdetail a {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    padding: 5px 10px;
+    color: #fff;
+    background-color: blue;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.cdetail .choose {
+    margin-left: 5px;
+}

@@ -6,9 +6,10 @@
 <!--写中间不一样的地方   写了后原layout.html里默认部分就没有了  若不写就默认layout.html显示-->
 {{ block 'content' }}
 <div class=" col-sm-9 col-md-10  ansubit ">
-    <form class="adcourse" method="post" id="adteacher">
+    <form class="adcourse" method="post" id="adteacher" autoComplete="off">
         <div class="form-group">
             <label for="">教师账号:&nbsp;</label>
+            <input type="hidden" name="usernames" value="{{ usermessages.username}}">
             <input type="text" class="adusname" name="username" value="{{ usermessages.username}}" disabled>
         </div>
         <div class="form-group">
@@ -32,17 +33,14 @@
             <input type="text" class="adcftimes" name="mobile" value="{{ usermessages.mobile}}" required>
         </div>
         <div class="form-group">
-            <input type="text" class="adcftimes" name="duty" style="display:none">
-        </div>
-        <div class="form-group">
             <label for="">所属专业:&nbsp;</label>
             <input type="text" class="admid" name="mid" value="{{ usermessages.mid}}" disabled>
         </div>
-        <button type="submit" class="btn  btn-info csubmit" id="addsubmits">确认提交</button>
+        <button type="button" class="btn btn-primary  csubmit " onclick=" upTmessage()">确认提交</button>
     </form>
 </div>
 
 {{ /block }} {{ block 'script' }}
 <!--留坑写属于自己的样式-->
-<script src="/public/js/addte.js"></script>
+<script src="/public/js/teupdate.js"></script>
 {{ /block }}

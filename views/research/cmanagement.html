@@ -1,7 +1,7 @@
 <!--继承子模板layout.html  会拥有它所有的样式-->
 {{ extend "./_layout/relayout.html" }} {{ block 'head' }}
 <!--写属于自己的样式-->
-<link rel="stylesheet" type="text/css" href="/public/css/tcourse.css">
+<link rel="stylesheet" type="text/css" href="/public/css/cmanagement.css">
 <style>
 
 </style>
@@ -19,47 +19,41 @@
             <label for="cnature">课程性质:</label>
             <input type="text" class="profess" id="cnature" name="cnature">
         </div>
-        <div class="form-group ">
-            <label for="cprofession">选择专业:</label>
-            <select id="cprofession">
-                <option></option>
-                <option>计算机科学与技术</option>
-                <option>软件工程</option>
-                <option>信息安全</option>
-                <option>智能科学与技术</option>
-            </select>
-        </div>
+       
         <div class="form-group ">
             <button type="button" class="btn btn-primary " id="search">查询</button>
         </div>
     </form> -->
     <div class="cdetail">
-        <table class="table table-hover">
+        <table class="table table-hover" id="semessage">
             <thead>
                 <tr>
-                    <!-- <th>#</th> -->
-                    <th>课程名程</th>
-                    <th>课程性质</th>
-                    <th>所属专业</th>
-                    <th>开课学年</th>
-                    <th>完成时间</th>
+                    <th>教师账号</th>
+                    <th>教师姓名</th>
+                    <th>教师专业</th>
+                    <th>课名</th>
+                    <th>课号</th>
+                    <!-- <th>所属专业</th> -->
                     <th>可选专业</th>
+                    <th>选课时间</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 {{ each data }}
                 <tr>
-                    <!-- <td>{{ $value.id }}</td> -->
+                    <td>{{ $value.username }}</td>
+                    <td>{{ $value.name }}</td>
+                    <td>{{ $value.mid }}</td>
                     <td>{{ $value.cname }}</td>
-                    <td>{{ $value.nature }}</td>
-                    <td>{{ $value.profession }}</td>
-                    <td>{{ $value.cydates }}</td>
-                    <td>{{ $value.cftimes }}</td>
+                    <td>{{ $value.cno }}</td>
+                    <!-- <td>{{ $value.profession }}</td> -->
                     <td>{{ $value.csmajor }}</td>
+                    <td>{{ $value.createtime }}</td>
                     <td>
                         <a href="javascript:;" class="detail" onclick="recfirm()">确定</a>
-                        <a href="javascript:;" class="choose" onclick="recdel({{ $value.id }} )"> 修改</a>
+                        <a href="javascript:;" class="choose" onclick="recdel('{{ $value.cno }}' )"> 删除</a>
+                        <a href="javascript:;" class="choose" onclick="recdel('{{ $value.cno }}' )"> 修改</a>
                     </td>
                 </tr>
                 {{ /each}}
