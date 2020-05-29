@@ -1,0 +1,45 @@
+<!--继承子模板layout.html  会拥有它所有的样式-->
+{{ extend "./_layout/lelayout.html" }} {{ block 'head' }}
+<!--写属于自己的样式-->
+<link rel="stylesheet" type="text/css" href="/public/css/admessage.css">
+<link rel="stylesheet" href="/public/css/tecmessage.css">
+<style>
+
+</style>
+{{ /block }}
+
+<!--写中间不一样的地方   写了后原layout.html里默认部分就没有了  若不写就默认layout.html显示-->
+{{ block 'content' }}
+<div class="col-sm-9 col-md-10 contents">
+    <div class="cdetail">
+        <table class="table table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th>教师账号</th>
+                    <th>教师姓名</th>
+                    <th>教师专业</th>
+                    <th>课名</th>
+                    <th>课号</th>
+                    <th>可选专业</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ each data }}
+                <tr>
+                    <td>{{ $value.username }}</td>
+                    <td>{{ $value.name }}</td>
+                    <td>{{ $value.mid }}</td>
+                    <td>{{ $value.cname }}</td>
+                    <td>{{ $value.cno }}</td>
+                    <td>{{ $value.csmajor }}</td>
+                </tr>
+                {{ /each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{ /block }} {{ block 'script' }}
+<!--留坑写属于自己的样式-->
+<!-- <script src="/public/js/tecmessage.js"></script> -->
+{{ /block }}

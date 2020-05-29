@@ -3,6 +3,7 @@ var User = require('../models/user.js');
 var Anment = require("../models/announcement.js")
 var Course = require("../models/course.js");
 var Thcourse = require("../models/tchcourse.js")
+var Tcresult = require("../models/tcresult.js")
     //1.创建路由容器
 var routers = express.Router();
 
@@ -140,6 +141,36 @@ routers.get("/course/detail", function(req, res) {
 
         });
     });
+});
+
+//教学信息查看
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/message", checkUserLogin);
+routers.get("/message", function(req, res) {
+    Tcresult.usTcresult(req.session.user.username, function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" })
+        }
+        let datas = {
+            ts: result
+        }
+        res.render("./teacher/message.html", {
+            //随意命名参数:数据
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: datas.ts
+        });
+    })
+});
+//批量删除 
+routers.post("tecmessage/del", checkUserLogin);
+routers.post("tecmessage/del", function(req, res) {
+    Tcresult.delTcresult(function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" })
+        }
+        res.send({ "success": true });
+
+    })
 });
 
 //是否登录   每次判断获取用户信息req.session.user

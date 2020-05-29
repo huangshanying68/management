@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>layout</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="/public/css/common.css">
+    <link href="/public/css/teachercon.css" rel="stylesheet"> {{ block 'head' }}
+    <!--留坑写属于自己的样式-->
+    {{ /block }}
+</head>
+
+<body>
+    <!--只写下面这些  即公共的东西-->
+    <!--公共头部  方法-->
+    {{ include './leheader.html' }}
+
+    <!--侧边  方法-->
+    {{ include './leside.html' }}
+
+    <!--留一个坑 写中间-->
+    {{ block 'content' }}
+    <!--写默认的东西   然后在主页index.html继承-->
+    <h1>默认内容</h1>
+    {{ /block }}
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--先引入才能使用-->
+    {{ block 'script' }}
+    <!--留坑写属于自己的样式-->
+    {{ /block }}
+</body>
+
+</html>

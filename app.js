@@ -14,11 +14,14 @@ var path = require("path");
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+
 //引用user.js  得到导出的routers
 var user = require('./routes/user');
 var teacher = require('./routes/teacher.js');
 var admin = require('./routes/admin')
 var research = require('./routes/research.js')
+var ledmin = require('./routes/ledmin.js')
+
 var bodyParser = require("body-parser");
 var session = require('express-session');
 
@@ -70,6 +73,7 @@ app.use('/user', user);
 app.use('/teacher', teacher);
 app.use('/admin', admin);
 app.use('/research', research)
+app.use('/ledmin', ledmin)
 
 //路由匹配不到 输出404
 app.use(function(req, res, next) {

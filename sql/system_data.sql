@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 28/05/2020 00:27:00
+ Date: 29/05/2020 11:40:19
 */
 
 SET NAMES utf8mb4;
@@ -59,6 +59,8 @@ INSERT INTO `course` VALUES (1, '大英1', '基础必修', '计算机科学与�
 INSERT INTO `course` VALUES (2, 's', '限选', '计算机科学与技术', '2016-2017', '15周', '计算机科学与技术、信息安全', NULL, NULL);
 INSERT INTO `course` VALUES (4, ' dass', '限选', '计算机科学与技术', ' 2017-2018', ' 13周', ' 计算机科学与技术', NULL, NULL);
 INSERT INTO `course` VALUES (5, ' cds', '基础必修', '计算机科学与技术', ' 2017-2018', ' 15周', ' 计算机科学与技术、软件工程', NULL, NULL);
+INSERT INTO `course` VALUES (14, '大物', '基础必修', '计算机科学与技术', '2015-2016', '13周', '计算机科学与技术、智能科学与技术、信息安全、软件工程', NULL, NULL);
+INSERT INTO `course` VALUES (25, '大英2', '基础必修', '计算机科学与技术', '2018-2019', '15周', '计算机科学与技术、信息安全', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for scourse
@@ -76,40 +78,35 @@ CREATE TABLE `scourse`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of scourse
--- ----------------------------
-INSERT INTO `scourse` VALUES ('3', 'dxs', '任选', '软件工程', '2018-2019', '15周', '软件工程');
-
--- ----------------------------
 -- Table structure for tchcourse
 -- ----------------------------
 DROP TABLE IF EXISTS `tchcourse`;
 CREATE TABLE `tchcourse`  (
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师账号',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师姓名',
-  `mid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师专业',
+  `flag` int(0) NOT NULL AUTO_INCREMENT COMMENT '标志',
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '教师账号',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '教师姓名',
+  `mid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '教师专业',
   `cname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '所选课程名称',
   `cno` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '课号',
   `csmajor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '课程可选专业',
   `profession` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '课程所属专业',
-  `createtime` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  `createtime` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`flag`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tchcourse
 -- ----------------------------
-INSERT INTO `tchcourse` VALUES ('1600201', '小明', '计算机科学与技术', ' cds', '5', ' 计算机科学与技术、软件工程', '软件工程', '2020-05-27 20:23:08');
-INSERT INTO `tchcourse` VALUES ('1600201', '小明', '计算机科学与技术', ' dass', '4', ' 计算机科学与技术', '计算机科学与技术', '2020-05-27 20:23:05');
-INSERT INTO `tchcourse` VALUES ('1600201', '小明', '计算机科学与技术', '大英1', '1', '计算机科学与技术、软件工程、信息安全', '信息安全', '2020-05-27 20:23:01');
-INSERT INTO `tchcourse` VALUES ('1600202', '小英', '软件工程', '大英1', '1', '计算机科学与技术、软件工程、信息安全', '计算机科学与技术', '2020-05-27 20:22:55');
-INSERT INTO `tchcourse` VALUES ('1600202', '小英', '软件工程', ' cds', '5', ' 计算机科学与技术、软件工程', '计算机科学与技术', '2020-05-27 20:22:49');
-INSERT INTO `tchcourse` VALUES ('1600202', '小英', '软件工程', ' dass', '4', ' 计算机科学与技术', '计算机科学与技术', '2020-05-27 16:22:37');
-INSERT INTO `tchcourse` VALUES ('1600203', '小信', '信息安全', ' cds', '5', ' 计算机科学与技术、软件工程', '软件工程', '2020-05-27 19:22:31');
-INSERT INTO `tchcourse` VALUES ('1600203', '小信', '信息安全', ' dass', '4', ' 计算机科学与技术', '计算机科学与技术', '2020-05-27 21:22:19');
-INSERT INTO `tchcourse` VALUES ('1600203', '小信', '信息安全', 's', '2', '计算机科学与技术、信息安全', '计算机科学与技术', '2020-05-27 20:22:12');
-INSERT INTO `tchcourse` VALUES ('555', 'cdc', 'csd', 'sd', 'xs', 'sa', 'as', '2020-05-27 20:35:12');
-INSERT INTO `tchcourse` VALUES ('555', 'cdc', 'csd', 'sd', 'xs', 'sa', 'as', '2020-05-27 20:35:46');
-INSERT INTO `tchcourse` VALUES ('1600202', '小英', '软件工程', 's', '2', '计算机科学与技术、信息安全', '计算机科学与技术', '2020-05-27 20:38:06');
+INSERT INTO `tchcourse` VALUES (1, '1600201', '小明', '计算机科学与技术', ' cds', '5', ' 计算机科学与技术、软件工程', '软件工程', '2020-05-27 20:23:08');
+INSERT INTO `tchcourse` VALUES (3, '1600201', '小明', '计算机科学与技术', '大英1', '1', '计算机科学与技术、软件工程、信息安全', '信息安全', '2020-05-27 20:23:01');
+INSERT INTO `tchcourse` VALUES (4, '1600204', '小英英', '软件工程', '大英1', '1', '计算机科学与技术、软件工程、信息安全', '计算机科学与技术', '2020-05-28 15:23:12');
+INSERT INTO `tchcourse` VALUES (5, '1600202', '小英', '软件工程', ' cds', '5', ' 计算机科学与技术、软件工程', '计算机科学与技术', '2020-05-27 20:22:49');
+INSERT INTO `tchcourse` VALUES (6, '1600202', '小英', '软件工程', ' dass', '4', ' 计算机科学与技术', '计算机科学与技术', '2020-05-27 16:22:37');
+INSERT INTO `tchcourse` VALUES (7, '1600203', '小信', '信息安全', ' cds', '5', ' 计算机科学与技术、软件工程', '软件工程', '2020-05-27 19:22:31');
+INSERT INTO `tchcourse` VALUES (8, '1600203', '小信', '信息安全', ' dass', '4', ' 计算机科学与技术', '计算机科学与技术', '2020-05-27 21:22:19');
+INSERT INTO `tchcourse` VALUES (10, '555', 'cdc', 'csd', 'sd', 'xs', 'sa', 'as', '2020-05-27 20:35:12');
+INSERT INTO `tchcourse` VALUES (11, '555', 'cdc', 'csd', 'sd', 'xs', 'sa', 'as', '2020-05-27 20:35:46');
+INSERT INTO `tchcourse` VALUES (13, '1600201', '小明', '计算机科学与技术', '大英2', '25', '计算机科学与技术、信息安全', '计算机科学与技术', '2020-05-29 11:28:42');
 
 -- ----------------------------
 -- Table structure for tcresult
@@ -123,8 +120,14 @@ CREATE TABLE `tcresult`  (
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师账号',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师姓名',
   `mid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '教师专业',
+  `flag` int(0) NOT NULL COMMENT '标志',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tcresult
+-- ----------------------------
+INSERT INTO `tcresult` VALUES (6, '大英2', '25', '计算机科学与技术、信息安全', '1600201', '小明', '计算机科学与技术', 13);
 
 -- ----------------------------
 -- Table structure for temessage
@@ -141,7 +144,7 @@ CREATE TABLE `temessage`  (
 -- ----------------------------
 -- Records of temessage
 -- ----------------------------
-INSERT INTO `temessage` VALUES ('1600201', '小明', '1', '大英1', '是');
+INSERT INTO `temessage` VALUES ('1600201', '小明', '25', '大英', '是');
 
 -- ----------------------------
 -- Table structure for users
@@ -162,10 +165,11 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '1600', '123456', '小红', '女', '1997-05-04', '18766668888', '教秘', NULL);
 INSERT INTO `users` VALUES (2, '16003', '123457', '小雪', '男', '1996-05-04', '18988888888', '教研', '计算机科学与技术');
-INSERT INTO `users` VALUES (3, '1600201', '123456', '小明', '男', '1995-04-03', '14755556666', '教师', '计算机科学与技术');
+INSERT INTO `users` VALUES (3, '1600201', '123457', '小明', '男', '1995-04-03', '14755556666', '教师', '计算机科学与技术');
 INSERT INTO `users` VALUES (4, '1600202', '123456', '小英', '女', '1997-02-06', '12344446666', '教师', '软件工程');
 INSERT INTO `users` VALUES (5, '1600203', '123456', '小信', '男', '1996-03-05', '14566666666', '教师', '信息安全');
+INSERT INTO `users` VALUES (6, '16004', '123456', '小杰', '女', '1995-04-03', '18011110000', '院务', NULL);
+INSERT INTO `users` VALUES (7, '16000', '123456', '小红', '女', '1994-03-02', '13222223333', '教秘', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -51,9 +51,9 @@
                     <td>{{ $value.csmajor }}</td>
                     <td>{{ $value.createtime }}</td>
                     <td>
-                        <a href="javascript:;" class="detail" onclick="recfirm()">确定</a>
-                        <a href="javascript:;" class="choose" onclick="recdel('{{ $value.cno }}' )"> 删除</a>
-                        <a href="javascript:;" class="choose" onclick="recdel('{{ $value.cno }}' )"> 修改</a>
+                        <a href="javascript:;" class="detail" onclick="recfirm('{{ $value.flag }}','{{ $value.username }}','{{ $value.name }}','{{ $value.mid }}','{{ $value.cname }}','{{ $value.cno }}','{{ $value.csmajor }}')">确定</a>
+                        <a href="javascript:;" class="choose" onclick="recdel('{{ $value.flag }}' )"> 删除</a>
+                        <a href="/research/cmanagement/recupdate?id={{ $value.flag }}" class="choose"> 修改</a>
                     </td>
                 </tr>
                 {{ /each}}
@@ -64,5 +64,5 @@
 
 {{ /block }} {{ block 'script' }}
 <!--留坑写属于自己的样式-->
-<script src="/public/js/reteaching.js"></script>
+<script src="/public/js/cmanage.js"></script>
 {{ /block }}

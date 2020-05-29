@@ -4,6 +4,7 @@ var Anment = require("../models/announcement.js");
 var Course = require("../models/course.js")
 var Scourse = require('../models/scourse.js')
 var Thcourse = require('../models/tchcourse.js')
+var Tcresult = require('../models/tcresult.js')
     //1.创建路由容器
 var routers = express.Router();
 
@@ -92,7 +93,9 @@ routers.get("/teaching", function(req, res) {
 
 })
 
-//课程确定 把数据添加到course 删除scourse
+//教学信息管理  
+
+// 把数据添加到course 删除scourse
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/teaching/recfirm", checkUserLogin);
 
@@ -153,6 +156,77 @@ routers.get("/cmanagement", function(req, res) {
             usermessage: req.session.user, //登陆后登录信息保存在req.session.user
             data: datas.tmessage
         })
+    })
+
+})
+
+//课程管理 确认教师
+//是否登录   每次判断获取用户信息req.session.user
+routers.post("/cmanagement/recfirm", checkUserLogin);
+routers.post("/cmanagement/recfirm", function(req, res) {
+        let tcresult = new Tcresult({
+            flag: req.body.flag,
+            username: req.body.username,
+            name: req.body.name,
+            mid: req.body.mid,
+            cname: req.body.cname,
+            cno: req.body.cno,
+            csmajor: req.body.csmajor
+        });
+        Tcresult.addTcresult(tcresult, function(err, result) {
+            if (err) {
+                res.send({ "error": 403, "message": "数据库异常！" });
+            }
+            res.send({ "success": true });
+
+        })
+
+    })
+    //课程管理 删除教师 即让教师的账号、姓名为空
+    //是否登录   每次判断获取用户信息req.session.user
+routers.post("/cmanagement/recdel", checkUserLogin);
+routers.post("/cmanagement/recdel", function(req, res) {
+    Thcourse.delThcourse(req.body.flag, function(err, result) {
+        if (err) {
+            res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        res.send({ "success": true });
+
+    })
+
+})
+
+//课程管理 修改教师 即为课程添加教师
+
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/cmanagement/recupdate", checkUserLogin);
+routers.get("/cmanagement/recupdate", function(req, res) {
+    Thcourse.queryFlag(req.query.id, function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        res.render("./research/recupdate.html", {
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: result
+        })
+
+    })
+})
+
+//是否登录   每次判断获取用户信息req.session.user
+routers.post("/cmanagement/recupdate", checkUserLogin);
+routers.post("/cmanagement/recupdate", function(req, res) {
+    Thcourse.findThcourse(req.body.username, req.body.name, req.body.mid, req.body.flag, function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        Tcresult.movTcresult(req.body.flag, function(err, result) {
+            if (err) {
+                return res.send({ "error": 403, "message": "数据库异常！" });
+            }
+            res.send({ "success": true });
+        })
+
     })
 
 })

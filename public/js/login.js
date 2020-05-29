@@ -37,6 +37,8 @@ $("#login_form").on("submit", function(datas) {
                     window.location.href = '/admin/';
                 } else if (role == "教研") {
                     window.location.href = '/research/';
+                } else if (role == "院务") {
+                    window.location.href = '/ledmin/';
                 } else {
                     window.location.href = '/user/login';
 
