@@ -104,7 +104,8 @@ routers.post("/course/chdel", function(req, res) {
         cno: req.body.cno,
         cname: req.body.cname,
         csmajor: req.body.csmajor,
-        profession: req.body.profession
+        profession: req.body.profession,
+        cydates: req.body.cydates
     });
 
     Thcourse.addThcourse(thcourse, function(err, result) {
@@ -130,7 +131,7 @@ routers.get("/course/detail", function(req, res) {
      *根据id把信息查出来
      *使用模板引擎渲染页面
      */
-    Course.GetMessage(req.query.cno, function(err, result) {
+    Course.getCno(req.query.cno, function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" })
         }
@@ -140,6 +141,39 @@ routers.get("/course/detail", function(req, res) {
             data: result
 
         });
+    });
+});
+
+//选课详情  查看选的课程
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/decourse", checkUserLogin);
+routers.get("/decourse", function(req, res) {
+    Thcourse.seUsername(req.session.user.username, function(err, result) {
+        if (err) {
+            res.send({ "error": 403, "message": "数据库异常！" })
+        }
+        let datas = {
+            results: result
+        }
+        res.render("./teacher/tcancel.html", {
+            //随意命名参数:数据
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: datas.results
+
+        });
+    });
+});
+
+//取消选课
+routers.post("/decourse/recdel", checkUserLogin);
+routers.post("/decourse/recdel", function(req, res) {
+    Thcourse.delCourse(req.body.cno, req.session.user.username, function(err, result) {
+        console
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" })
+        }
+        res.send({ "success": true });
+
     });
 });
 

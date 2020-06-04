@@ -43,6 +43,7 @@ $(function() {
 
                 } else {
                     window.alert(response.message);
+                    window.location.href = "/teacher/tecpasword"
                 }
             }
         })

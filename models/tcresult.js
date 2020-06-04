@@ -8,14 +8,16 @@ function Tcresult(tcresult) {
     this.username = tcresult.username;
     this.name = tcresult.name;
     this.mid = tcresult.mid;
-    this.flag = tcresult.flag
+    this.flag = tcresult.flag;
+    this.cydates = tcresult.cydates;
+    this.profession = tcresult.profession;
 
 };
 
 //添加课程教师确认信息
 Tcresult.addTcresult = function(tcresult, callback) {
-    var selectSql = 'insert into tcresult (flag,username,name,mid,cname,cno,csmajor)  values (?,?,?,?,?,?,?)';
-    db.query(selectSql, [tcresult.flag, tcresult.username, tcresult.name, tcresult.mid, tcresult.cname, tcresult.cno, tcresult.csmajor], function(err, result) {
+    var selectSql = 'insert into tcresult (flag,username,name,mid,cname,cno,csmajor,cydates,profession)  values (?,?,?,?,?,?,?,?,?)';
+    db.query(selectSql, [tcresult.flag, tcresult.username, tcresult.name, tcresult.mid, tcresult.cname, tcresult.cno, tcresult.csmajor, tcresult.cydates, tcresult.profession], function(err, result) {
         if (err) {
             return callback(err);
         }
@@ -67,6 +69,30 @@ Tcresult.delTcresult = function(callback) {
         callback(err, result);
     });
 }
+
+//根据课程专业获取数据
+Tcresult.tProfession = function(profession, callback) {
+    var selectSql = 'select * from tcresult where profession = ?';
+    db.query(selectSql, [profession], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+}
+
+
+//按学期查找
+Tcresult.rCydates = function(cydates, callback) {
+    var selectSql = 'select * from tcresult where cydates=?';
+    db.query(selectSql, [cydates], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+}
+
 
 
 module.exports = Tcresult;

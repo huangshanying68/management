@@ -21,7 +21,7 @@
                     <th>开课学期</th>
                     <th>完成时间</th>
                     <th>可选专业</th>
-                    <th>操作</th>
+                    <!-- <th>操作</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -34,10 +34,10 @@
                     <td>{{ $value.cydates }}</td>
                     <td>{{ $value.cftimes }}</td>
                     <td>{{ $value.csmajor }}</td>
-                    <td>
+                    <!-- <td>
                         <a href="javascript:;" class="detail" onclick="recfirm('{{ $value.cno }}' ,'{{ $value.cname }}' ,'{{ $value.nature }}','{{ $value.profession }}','{{ $value.cydates }}','{{ $value.cftimes }}','{{ $value.csmajor }}')">确定</a>
                         <a href="javascript:;" class="choose" onclick="recdel('{{ $value.cno }}' )"> 取消</a>
-                    </td>
+                    </td> -->
                 </tr>
                 {{ /each}}
             </tbody>
@@ -47,5 +47,5 @@
 
 {{ /block }} {{ block 'script' }}
 <!--留坑写属于自己的样式-->
-<script src="/public/js/reteaching.js"></script>
+<!-- <script src="/public/js/reteaching.js"></script> -->
 {{ /block }}

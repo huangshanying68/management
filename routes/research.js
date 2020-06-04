@@ -125,7 +125,7 @@ routers.post("/teaching/recfirm", function(req, res) {
 
 })
 
-//删除课程
+//删除(取消)课程
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/teaching/recdel", checkUserLogin);
 routers.post("/teaching/recdel", function(req, res) {
@@ -139,11 +139,33 @@ routers.post("/teaching/recdel", function(req, res) {
 
 })
 
+
+//开课信息浏览 
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/copen", checkUserLogin);
+
+//根据教研所属专业显示专业的课程数据
+routers.get("/copen", function(req, res) {
+    Course.GetMessage(req.session.user.mid, function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        let datas = {
+            tmessage: result
+        };
+        res.render("./research/recopen.html", {
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: datas.tmessage
+        })
+    })
+
+})
+
 //课程管理
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/cmanagement", checkUserLogin);
 
-//根据教师的专业是否是课程可选专业来显示数据
+//根据教师的专业是否是课程所属专业来显示数据
 routers.get("/cmanagement", function(req, res) {
     Thcourse.queryThcourse(req.session.user.mid, function(err, result) {
         if (err) {
@@ -171,7 +193,9 @@ routers.post("/cmanagement/recfirm", function(req, res) {
             mid: req.body.mid,
             cname: req.body.cname,
             cno: req.body.cno,
-            csmajor: req.body.csmajor
+            csmajor: req.body.csmajor,
+            cydates: req.body.cydates,
+            profession: profession
         });
         Tcresult.addTcresult(tcresult, function(err, result) {
             if (err) {
@@ -212,6 +236,30 @@ routers.get("/cmanagement/recupdate", function(req, res) {
 
     })
 })
+
+
+
+//课程管理信息浏览
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/rechoset", checkUserLogin);
+
+//根据教师的专业是否是课程所属专业来显示数据
+routers.get("/rechoset", function(req, res) {
+    Tcresult.tProfession(req.session.user.mid, function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        let datas = {
+            tmessage: result
+        };
+        res.render("./research/rechoset.html", {
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: datas.tmessage
+        })
+    })
+
+})
+
 
 //是否登录   每次判断获取用户信息req.session.user
 routers.post("/cmanagement/recupdate", checkUserLogin);

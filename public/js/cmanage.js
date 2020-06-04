@@ -30,7 +30,7 @@ window.onload = function() {
 
 };
 
-function recfirm(flag, username, name, mid, cname, cno, csmajor) {
+function recfirm(flag, username, name, mid, cname, cno, csmajor, cydates, profession) {
     $.ajax({
         url: "/research/cmanagement/recfirm",
         type: "post",
@@ -42,7 +42,9 @@ function recfirm(flag, username, name, mid, cname, cno, csmajor) {
             mid: mid,
             cname: cname,
             cno: cno,
-            csmajor: csmajor
+            csmajor: csmajor,
+            cydates: cydates,
+            profession: profession
         },
         success: function(response) {
             if (response.success) {

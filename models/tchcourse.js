@@ -10,12 +10,13 @@ function Thcourse(thcourse) {
     this.csmajor = thcourse.csmajor;
     this.profession = thcourse.profession;
     this.createtime = thcourse.createtime;
+    this.cydates = thcourse.cydates;
 };
 
 //添加选课信息
 Thcourse.addThcourse = function(thcourse, callback) {
-    var selectSql = 'insert into tchcourse (username,name,mid,cno,cname,csmajor,profession)  values (?,?,?,?,?,?,?)';
-    db.query(selectSql, [thcourse.username, thcourse.name, thcourse.mid, thcourse.cno, thcourse.cname, thcourse.csmajor, thcourse.profession], function(err, result) {
+    var selectSql = 'insert into tchcourse (username,name,mid,cno,cname,csmajor,profession,cydates)  values (?,?,?,?,?,?,?,?)';
+    db.query(selectSql, [thcourse.username, thcourse.name, thcourse.mid, thcourse.cno, thcourse.cname, thcourse.csmajor, thcourse.profession, thcourse.cydates], function(err, result) {
         if (err) {
             return callback(err);
         }
@@ -79,5 +80,27 @@ Thcourse.findThcourse = function(username, name, mid, flag, callback) {
     })
 }
 
+//通过username显示数据   
+Thcourse.seUsername = function(username, callback) {
+    var selectSql = 'select * from tchcourse WHERE flag  in (SELECT flag from tcresult where username=?)';
+    db.query(selectSql, [username], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+}
+
+
+//通过查找对应用户来取消选课
+Thcourse.delCourse = function(cno, username, callback) {
+    var selectSql = 'DELETE FROM tchcourse  WHERE  cno=? and username=?';
+    db.query(selectSql, [cno, username], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+}
 
 module.exports = Thcourse;

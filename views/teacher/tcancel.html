@@ -1,5 +1,5 @@
 <!--继承子模板layout.html  会拥有它所有的样式-->
-{{ extend "./_layout/relayout.html" }} {{ block 'head' }}
+{{ extend "./_layout/tlayout.html" }} {{ block 'head' }}
 <!--写属于自己的样式-->
 <link rel="stylesheet" type="text/css" href="/public/css/tcourse.css">
 <style>
@@ -11,32 +11,27 @@
 {{ block 'content' }}
 <div class="col-sm-9 col-md-10 contents">
     <div class="cdetail">
-        <table class="table table-hover">
+        <table class="table table-hover" id="myTable">
             <thead>
                 <tr>
                     <th>课程代码</th>
-                    <th>课程名程</th>
+                    <th>课程名称</th>
                     <th>课程性质</th>
-                    <th>所属专业</th>
-                    <th>开课学期</th>
-                    <th>完成时间</th>
-                    <th>可选专业</th>
+                    <th>课程所属专业</th>
+                    <th>课程可选专业</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 {{ each data }}
                 <tr>
-                    <td>{{ $value.cno }}</td>
+                    <td>{{ $value.cno}}</td>
                     <td>{{ $value.cname }}</td>
                     <td>{{ $value.nature }}</td>
                     <td>{{ $value.profession }}</td>
-                    <td>{{ $value.cydates }}</td>
-                    <td>{{ $value.cftimes }}</td>
                     <td>{{ $value.csmajor }}</td>
                     <td>
-                        <a href="javascript:;" class="detail" onclick="recfirm('{{ $value.cno }}' ,'{{ $value.cname }}' ,'{{ $value.nature }}','{{ $value.profession }}','{{ $value.cydates }}','{{ $value.cftimes }}','{{ $value.csmajor }}')">确定</a>
-                        <a href="javascript:;" class="choose" onclick="recdel('{{ $value.cno }}' )"> 取消</a>
+                        <a href="javascript:;" class="choose" onclick="recdel('{{ $value.cno }}')"> 取消选课</a>
                     </td>
                 </tr>
                 {{ /each}}
@@ -47,5 +42,5 @@
 
 {{ /block }} {{ block 'script' }}
 <!--留坑写属于自己的样式-->
-<script src="/public/js/reteaching.js"></script>
+<script src="/public/js/tcancel.js"></script>
 {{ /block }}

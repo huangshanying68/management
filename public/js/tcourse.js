@@ -23,7 +23,7 @@ function searchs() {
     }
 }
 
-function chdel(cno, cname, csmajor, profession) {
+function chdel(cno, cname, csmajor, profession, cydates) {
     $.ajax({
         url: "/teacher/course/chdel",
         type: "post",
@@ -32,7 +32,8 @@ function chdel(cno, cname, csmajor, profession) {
             cno: cno,
             cname: cname,
             csmajor: csmajor,
-            profession: profession
+            profession: profession,
+            cydates: cydates
         },
         success: function(response) {
             if (response.success) {

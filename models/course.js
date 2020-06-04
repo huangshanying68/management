@@ -11,7 +11,7 @@ function Course(course) {
     this.capacity = course.capacity;
     this.cteachers = course.cteachers;
 };
-//获取课程所有信息
+//根据账号获取课程所有信息
 Course.queryCourse = function(username, callback) {
     var selectSql = "SELECT * from course WHERE cno not in(SELECT cno from tchcourse where username=?)";
     db.query(selectSql, [username], function(err, result) {
@@ -24,7 +24,7 @@ Course.queryCourse = function(username, callback) {
 };
 
 //通过cno获取信息
-Course.GetMessage = function(cno, callback) {
+Course.getCno = function(cno, callback) {
     var selectSql = 'select * from course where cno = ?';
     db.query(selectSql, [cno], function(err, result) {
         if (err) {
@@ -60,13 +60,38 @@ Course.addCourse = function(course, callback) {
 
 //通过cno删除数据
 Course.delCourse = function(cno, callback) {
-        var selectSql = 'DELETE FROM course WHERE  id =?';
-        db.query(selectSql, [cno], function(err, result) {
-            if (err) {
-                return callback(err);
-            }
-            callback(err, result);
-        });
-    }
-    //3.把路由导出
+    var selectSql = 'DELETE FROM course WHERE  cno =?';
+    db.query(selectSql, [cno], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        callback(err, result);
+    });
+}
+
+//通过课程专业获取信息
+Course.GetMessage = function(profession, callback) {
+    var selectSql = 'select * from course where profession = ?';
+    db.query(selectSql, [profession], function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        var data = result;
+        callback(err, data);
+    });
+};
+
+//获取所有信息
+Course.allCourse = function(callback) {
+    var selectSql = "SELECT * from course ";
+    db.query(selectSql, function(err, result) {
+        if (err) {
+            return callback(err);
+        }
+        var data = result; //数组
+        callback(err, data);
+    });
+};
+
+//3.把路由导出
 module.exports = Course;

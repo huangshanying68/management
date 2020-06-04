@@ -6,6 +6,7 @@ function addsubmit() {
     let cydates = $.trim($('[name="cydates"]').val());
     let cftimes = $.trim($('[name="cftimes"]').val());
     let csmajor = $.trim($('[name="csmajor"]').val());
+    let grade = $.trim($('[name="grade"]').val());
     $.ajax({
         url: "/admin/",
         type: "post",
@@ -16,7 +17,8 @@ function addsubmit() {
             profession: profession,
             cydates: cydates,
             cftimes: cftimes,
-            csmajor: csmajor
+            csmajor: csmajor,
+            grade: grade
         },
         dataType: "json",
         success: function(response) {

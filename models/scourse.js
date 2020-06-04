@@ -8,6 +8,7 @@ function Scourse(scourse) {
     this.cydates = scourse.cydates;
     this.cftimes = scourse.cftimes;
     this.csmajor = scourse.csmajor;
+    this.grade = scourse.grade;
 };
 //获取课程所有信息
 Scourse.queryCourse = function(callback) {
@@ -47,8 +48,8 @@ Scourse.countCourse = function(callback) {
 
 //添加信息
 Scourse.addCourse = function(scourse, callback) {
-    var selectSql = 'insert into scourse (cno,cname,nature,profession,cydates,cftimes,csmajor)  values (?,?,?,?,?,?,?)';
-    db.query(selectSql, [scourse.cno, scourse.cname, scourse.nature, scourse.profession, scourse.cydates, scourse.cftimes, scourse.csmajor], function(err, result) {
+    var selectSql = 'insert into scourse (cno,cname,nature,profession,cydates,cftimes,csmajor,grade)  values (?,?,?,?,?,?,?,?)';
+    db.query(selectSql, [scourse.cno, scourse.cname, scourse.nature, scourse.profession, scourse.cydates, scourse.cftimes, scourse.csmajor, scourse.grade], function(err, result) {
         if (err) {
             return callback(err);
         }
@@ -56,7 +57,7 @@ Scourse.addCourse = function(scourse, callback) {
     });
 };
 
-//通过id删除数据
+//通过cno删除数据
 Scourse.delScourse = function(cno, callback) {
         var selectSql = 'DELETE FROM scourse WHERE  cno =?';
         db.query(selectSql, [cno], function(err, result) {

@@ -3,8 +3,9 @@ var User = require('../models/user.js');
 var Scourse = require("../models/scourse.js")
 var Message = require('../models/temessage.js');
 var Anment = require('../models/announcement.js');
-var Tcresult = require('../models/tcresult.js')
-    //1.创建路由容器
+var Tcresult = require('../models/tcresult.js');
+var Course = require('../models/course.js');
+//1.创建路由容器
 var routers = express.Router();
 
 //检查用户是否登录
@@ -35,6 +36,7 @@ routers.post("/", function(req, res) {
         cydates: req.body.cydates,
         cftimes: req.body.cftimes,
         csmajor: req.body.csmajor,
+        grade: req.body.grade
     });
     // console.log(scourse)
     Scourse.addCourse(scourse, function(err, data) {
@@ -48,12 +50,51 @@ routers.post("/", function(req, res) {
 
 })
 
+//教学计划录入信息浏览
+//是否登录   每次判断获取用户信息req.session.user
+routers.get("/aentry", checkUserLogin);
+routers.get("/aentry", function(req, res) {
+    Scourse.queryCourse(function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        let datas = {
+            results: result
+        }
+        res.render("./admin/aentry.html", {
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: datas.results
+        })
+    })
+});
+
+//开设课程信息浏览
+routers.get("/aopen", checkUserLogin);
+routers.get("/aopen", function(req, res) {
+    Course.allCourse(function(err, result) {
+        if (err) {
+            return res.send({ "error": 403, "message": "数据库异常！" });
+        }
+        let datas = {
+            results: result
+        }
+        res.render("./admin/aopen.html", {
+            usermessage: req.session.user, //登陆后登录信息保存在req.session.user
+            data: datas.results
+        })
+    })
+});
+
+
+
+
+
 //档案管理
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/tesearch", checkUserLogin);
 routers.get("/tesearch", function(req, res) {
 
-    Message.detemessage(req.query.cno, function(err, results) {
+    Message.detemessage(req.query.id, function(err, results) {
         Message.queryCourse(function(err, results) {
             if (err) {
                 return res.send({ "error": 403, "message": "数据库异常！" });

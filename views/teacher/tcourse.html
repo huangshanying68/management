@@ -37,7 +37,7 @@
         <table class="table table-hover" id="myTable">
             <thead>
                 <tr>
-                    <th>课程编号</th>
+                    <th>课程代码</th>
                     <th>课程名称</th>
                     <th>课程性质</th>
                     <th>课程所属专业</th>
@@ -55,7 +55,7 @@
                     <td>{{ $value.csmajor }}</td>
                     <td>
                         <a href="/teacher/course/detail?cno={{ $value.cno }}" class="detail">课程详情</a>
-                        <a href="javascript:;" class="choose" onclick="chdel('{{ $value.cno }}' ,'{{ $value.cname }}' ,'{{ $value.csmajor }}','{{ $value.profession }}' )"> 选课</a>
+                        <a href="javascript:;" class="choose" onclick="chdel('{{ $value.cno }}' ,'{{ $value.cname }}' ,'{{ $value.csmajor }}','{{ $value.profession }}','{{ $value.cydates }}','{{ $value.profession }}' )"> 选课</a>
                     </td>
                 </tr>
                 {{ /each}}

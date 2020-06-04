@@ -1,7 +1,8 @@
 var db = require('./db.js');
 
 function Message(message) {
-    this.username = message.username,
+    this.id = message.id,
+        this.username = message.username,
         this.name = message.name,
         this.cno = message.cno,
         this.cname = message.cname,
@@ -67,9 +68,9 @@ Message.countUsername = function(callback) {
 };
 
 //删除信息
-Message.detemessage = function(cno, callback) {
-    var selectSql = 'DELETE FROM temessage WHERE  cno =?';
-    db.query(selectSql, [cno], function(err, result) {
+Message.detemessage = function(id, callback) {
+    var selectSql = 'DELETE FROM temessage WHERE  id =?';
+    db.query(selectSql, [id], function(err, result) {
         if (err) {
             return callback(err);
         }
