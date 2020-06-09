@@ -195,8 +195,9 @@ routers.post("/cmanagement/recfirm", function(req, res) {
             cno: req.body.cno,
             csmajor: req.body.csmajor,
             cydates: req.body.cydates,
-            profession: profession
+            profession: req.body.profession
         });
+        console.log(tcresult)
         Tcresult.addTcresult(tcresult, function(err, result) {
             if (err) {
                 res.send({ "error": 403, "message": "数据库异常！" });

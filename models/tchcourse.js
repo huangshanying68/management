@@ -82,7 +82,7 @@ Thcourse.findThcourse = function(username, name, mid, flag, callback) {
 
 //通过username显示数据   
 Thcourse.seUsername = function(username, callback) {
-    var selectSql = 'select * from tchcourse WHERE flag  in (SELECT flag from tcresult where username=?)';
+    var selectSql = 'select * from tchcourse WHERE  username=?';
     db.query(selectSql, [username], function(err, result) {
         if (err) {
             return callback(err);

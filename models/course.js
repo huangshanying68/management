@@ -12,9 +12,9 @@ function Course(course) {
     this.cteachers = course.cteachers;
 };
 //根据账号获取课程所有信息
-Course.queryCourse = function(username, callback) {
-    var selectSql = "SELECT * from course WHERE cno not in(SELECT cno from tchcourse where username=?)";
-    db.query(selectSql, [username], function(err, result) {
+Course.queryCourse = function(username, username, callback) {
+    var selectSql = "SELECT * from course WHERE cno not in(SELECT cno from tchcourse where username=? UNION SELECT cno from tcresult where username=?)";
+    db.query(selectSql, [username, username], function(err, result) {
         if (err) {
             return callback(err);
         }

@@ -78,7 +78,7 @@ routers.get("/announcement", function(req, res) {
 routers.get("/course", checkUserLogin);
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/course", function(req, res) {
-    Course.queryCourse(req.session.user.username, function(err, result) {
+    Course.queryCourse(req.session.user.username, req.session.user.username, function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" });
         }
@@ -167,6 +167,8 @@ routers.get("/decourse", function(req, res) {
 //取消选课
 routers.post("/decourse/recdel", checkUserLogin);
 routers.post("/decourse/recdel", function(req, res) {
+    console.log(req.body.cno);
+    console.log(req.session.user.username);
     Thcourse.delCourse(req.body.cno, req.session.user.username, function(err, result) {
         console
         if (err) {
