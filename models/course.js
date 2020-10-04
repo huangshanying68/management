@@ -13,7 +13,7 @@ function Course(course) {
 };
 //根据账号获取课程所有信息
 Course.queryCourse = function(username, username, callback) {
-    var selectSql = "SELECT * from course WHERE cno not in(SELECT cno from tchcourse where username=? UNION SELECT cno from tcresult where username=?)";
+    var selectSql = "SELECT * from course WHERE cno not in(SELECT cno from tchcourse where username=? UNION SELECT cno from tcresult where username=?)and cydates='2017-2018'";
     db.query(selectSql, [username, username], function(err, result) {
         if (err) {
             return callback(err);

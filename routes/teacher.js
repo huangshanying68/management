@@ -148,7 +148,7 @@ routers.get("/course/detail", function(req, res) {
 //是否登录   每次判断获取用户信息req.session.user
 routers.get("/decourse", checkUserLogin);
 routers.get("/decourse", function(req, res) {
-    Thcourse.seUsername(req.session.user.username, function(err, result) {
+    Thcourse.seUsername(req.session.user.username, req.session.user.username, function(err, result) {
         if (err) {
             res.send({ "error": 403, "message": "数据库异常！" })
         }

@@ -81,9 +81,9 @@ Thcourse.findThcourse = function(username, name, mid, flag, callback) {
 }
 
 //通过username显示数据   
-Thcourse.seUsername = function(username, callback) {
-    var selectSql = 'select * from tchcourse WHERE  username=?';
-    db.query(selectSql, [username], function(err, result) {
+Thcourse.seUsername = function(username, username, callback) {
+    var selectSql = "SELECT * from tchcourse WHERE cno not in(SELECT cno from tcresult where username=? ) and username=?";
+    db.query(selectSql, [username, username], function(err, result) {
         if (err) {
             return callback(err);
         }

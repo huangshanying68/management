@@ -39,7 +39,7 @@ Tcresult.movTcresult = function(flag, callback) {
 
 //根据教师账号获取数据
 Tcresult.usTcresult = function(username, callback) {
-    var selectSql = 'select * from tcresult where username = ?';
+    var selectSql = "select * from tcresult where username = ? and cydates='2017-2018'";
     db.query(selectSql, [username], function(err, result) {
         if (err) {
             return callback(err);
